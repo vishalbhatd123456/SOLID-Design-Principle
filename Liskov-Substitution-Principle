@@ -1,0 +1,57 @@
+using System;
+
+namespace Liskov_Substitution_Principle
+{
+    class Program
+    {
+        public class Rectangle
+        {
+            //auto property
+            public virtual int Width { get; set; }
+            public virtual int Height { get; set; }
+
+            public Rectangle()
+            {
+
+            }
+            public Rectangle(int width, int height)
+            {
+                Width = width;
+                Height = height;
+            }
+            public override string ToString()
+            {
+                return $"{nameof(Width)}:{Width}, {nameof(Height)}:{Height}";
+            }
+        }
+        public class Square : Rectangle
+        {
+            // new width & height setters
+            public override int Width
+            {
+                set
+                {
+                    base.Width = base.Height = value;
+                }
+            }
+             public override int Height
+            {
+                set
+                {
+                    base.Height = base.Width = value;
+                }
+            }
+            }
+        
+        public static int Area(Rectangle r) => r.Width * r.Height;
+        static void Main(string[] args)
+        {
+            //substitute a base item for a sub item
+            Rectangle rc = new Rectangle(2,4);
+            Console.WriteLine($"{rc} has area {Area(rc)}");
+            Square sq = new Square();
+            sq.Width = 4;
+            Console.WriteLine($"{sq} has area : {Area(sq)}");
+        }
+    }
+}
